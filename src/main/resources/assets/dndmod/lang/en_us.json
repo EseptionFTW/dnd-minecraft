@@ -1,0 +1,13 @@
+{
+  "creativetab.dnd_mod_tab": "DnD Minecraft",
+
+  "item.dndmod.reset_scroll": "Reset Scroll",
+
+  "key.category.dndmod.dndmod": "DnD Minecraft",
+
+  "key.dndmod.open_character_sheet": "Character Sheet",
+  "key.dndmod.open_stats_menu": "Stats Menu",
+  "key.dndmod.open_skills_menu": "Skill Menu",
+  "key.dndmod.open_spells_menu": "Spell Menu",
+  "key.dndmod.open_level_menu": "Level Menu"
+}
