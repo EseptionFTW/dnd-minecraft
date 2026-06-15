@@ -14,7 +14,7 @@ public class ModCreativeModeTabs {
     public static final DeferredRegister<CreativeModeTab> Creative_Mode_Tabs =
             DeferredRegister.create(Registries.CREATIVE_MODE_TAB, Dnd_minecraft.MODID);
 
-    public static final RegistryObject<CreativeModeTab> DND_MINECRAFT_TA = Creative_Mode_Tabs.register("dnd_minecraft_tab",
+    public static final RegistryObject<CreativeModeTab> DND_MINECRAFT_TAB = Creative_Mode_Tabs.register("dnd_minecraft_tab",
             () -> CreativeModeTab.builder().icon(() -> new ItemStack(Items.STICK.asItem()))
                     .title(Component.translatable("creativetab.dnd_mod_tab"))
                     .displayItems((pParameters, pOutput) -> {
