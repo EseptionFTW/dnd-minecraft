@@ -16,7 +16,7 @@ public class ModCreativeModeTabs {
 
     public static final RegistryObject<CreativeModeTab> DND_MINECRAFT_TAB = Creative_Mode_Tabs.register("dnd_minecraft_tab",
             () -> CreativeModeTab.builder().icon(() -> new ItemStack(Items.STICK.asItem()))
-                    .title(Component.translatable("creativetab.dnd_mod_tab"))
+                    .title(Component.translatable("creativetab.dnd_minecraft_tab"))
                     .displayItems((pParameters, pOutput) -> {
                         pOutput.accept(Items.STICK.asItem());
 

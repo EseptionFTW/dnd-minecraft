@@ -2,6 +2,7 @@ package net.eseption.dnd_minecraft;
 
 import com.mojang.logging.LogUtils;
 import net.eseption.dnd_minecraft.item.ModCreativeModeTabs;
+import net.eseption.dnd_minecraft.network.ModMessages;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.food.FoodProperties;
@@ -90,6 +91,8 @@ public class Dnd_minecraft {
         LOGGER.info(Config.magicNumberIntroduction + Config.magicNumber);
 
         Config.items.forEach((item) -> LOGGER.info("ITEM >> {}", item.toString()));
+
+        ModMessages.register();
     }
 
     // Add the example block item to the building blocks tab
