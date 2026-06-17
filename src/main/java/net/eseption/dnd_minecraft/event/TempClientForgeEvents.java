@@ -25,23 +25,6 @@ public class TempClientForgeEvents {
 
         if (KeyBinding.OPEN_CHARACTER_SHEET.consumeClick()) {
 
-            Player player = minecraft.player;
-
-            player.getCapability(EntityStatsProvider.ENTITY_STATS)
-                    .ifPresent(stats -> {
-
-                        player.sendSystemMessage(
-                                Component.literal(
-                                        "STR=" + stats.getStrength()
-                                                + " DEX=" + stats.getDexterity()
-                                                + " CON=" + stats.getConstitution()
-                                                + " INT=" + stats.getIntelligence()
-                                                + " WIS=" + stats.getWisdom()
-                                                + " CHA=" + stats.getCharisma()
-                                )
-                        );
-                    });
-
             //if (minecraft.screen == null) {
             //    minecraft.setScreen(new CharacterScreen());
             //}

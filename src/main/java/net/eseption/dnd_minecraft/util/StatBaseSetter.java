@@ -19,7 +19,7 @@ import net.minecraft.world.entity.player.Player;
 
 //separate stats into functions
 
-public class StatSetter {
+public class StatBaseSetter {
 
     public static void generateStats(LivingEntity entity, EntityStatsHolder stats) {
 
@@ -81,13 +81,16 @@ public class StatSetter {
 
         AttributeInstance attack = entity.getAttribute(Attributes.ATTACK_DAMAGE);
 
-        int str = 0;
+        int str = 10;
         if (attack != null) {
             str = 10 + (int) (attack.getValue() / 2);
+        } else {
+            //make scale based on  constitution (horses...)
+            str = 8;
         }
 
         str = Math.min(str, 21);
-        stats.setStrength(str);
+        stats.setBaseStrength(str);
     }
 
     private static void generateDEX(LivingEntity entity, EntityStatsHolder stats) {
@@ -110,7 +113,7 @@ public class StatSetter {
             dex = 10 + (int)(Math.ceil(move_speed.getBaseValue()*4));
         }
 
-        stats.setDexterity(dex);
+        stats.setBaseDexterity(dex);
     }
 
     private static void generateCON(LivingEntity entity, EntityStatsHolder stats) {
@@ -125,39 +128,39 @@ public class StatSetter {
             con = 23;
         }
 
-        stats.setConstitution(con);
+        stats.setBaseConstitution(con);
     }
 
     private static void generateINT(LivingEntity entity, EntityStatsHolder stats) {
         //illagers (PatrollingMonster)!/ villager!/ wanderer!/ iron golem!
 
         if (entity instanceof AbstractVillager) {
-            stats.setIntelligence(12);
+            stats.setBaseIntelligence(12);
         }
 
         if (entity instanceof PatrollingMonster) {
             if (entity instanceof Illusioner) {
-                stats.setIntelligence(17);
+                stats.setBaseIntelligence(17);
             } else if (entity instanceof Ravager) {
-                stats.setIntelligence(8);
+                stats.setBaseIntelligence(8);
             } else {
-                stats.setIntelligence(14);
+                stats.setBaseIntelligence(14);
             }
         }
 
         if (entity instanceof AbstractGolem) {
-            stats.setIntelligence(6);
+            stats.setBaseIntelligence(6);
         }
 
         if (entity instanceof Animal) {
             if (entity instanceof TamableAnimal) {
-                stats.setIntelligence(7);
+                stats.setBaseIntelligence(7);
             } else if (entity instanceof AbstractHorse) {
-                stats.setIntelligence(8);
+                stats.setBaseIntelligence(8);
             } else if (entity instanceof Fox) {
-                stats.setIntelligence(8);
+                stats.setBaseIntelligence(8);
             } else {
-                stats.setIntelligence(2);
+                stats.setBaseIntelligence(2);
             }
         }
 
@@ -166,74 +169,59 @@ public class StatSetter {
     private static void generateWIS(LivingEntity entity, EntityStatsHolder stats) {
         //done
         if (entity instanceof Evoker) {
-            stats.setWisdom(17);
+            stats.setBaseWisdom(17);
         }
 
         if (entity instanceof  Witch) {
-            stats.setWisdom(16);
+            stats.setBaseWisdom(16);
         }
 
         if (entity instanceof Allay) {
-            stats.setWisdom(14);
+            stats.setBaseWisdom(14);
         }
     }
 
     private static void generateCHA(LivingEntity entity, EntityStatsHolder stats) {
         //new mob default
-        stats.setCharisma(8);
+        stats.setBaseCharisma(8);
 
         if (entity instanceof Animal) {
-            stats.setCharisma(4);
+            stats.setBaseCharisma(4);
         }
 
         if (entity instanceof AbstractVillager) {
-            stats.setCharisma(16);
+            stats.setBaseCharisma(16);
         }
 
         if (entity instanceof PatrollingMonster) {
             if (entity instanceof Ravager) {
-                stats.setCharisma(4);
+                stats.setBaseCharisma(4);
             } else {
-                stats.setCharisma(14);
+                stats.setBaseCharisma(14);
             }
         }
 
         if (entity instanceof AbstractGolem) {
-            stats.setCharisma(7);
+            stats.setBaseCharisma(7);
         }
     }
 
     private static void generateAC(LivingEntity entity, EntityStatsHolder stats) {
-        int nat_ac = 10 + entity.getArmorValue()/2;
-        int ac = 0;
-        AttributeInstance armor = entity.getAttribute(Attributes.ARMOR);
-
-        //may become redundant once armor ac updates, will need update function if armor breaks anyway
-
-        //completely redundant due to loading order
-
-        if (armor != null) {
-            ac = (int) armor.getValue()/2;
-        }
-
-        ac = nat_ac + ac;
 
         if (entity instanceof Turtle) {
-            ac = 16;
+            stats.setNaturalArmorClass(16);
         }
-
-        stats.setArmorClass(ac);
     }
 
     private static void generateSpecial(LivingEntity entity, EntityStatsHolder stats) {
         if (entity instanceof Warden) {
-            stats.setAll(21, 19, 26, 6, 10, 2, 12, 21);
+            stats.setAll(21, 19, 26, 6, 10, 2, 12, 14);
         }
         if (entity instanceof EnderDragon) {
-            stats.setAll(20, 25, 27, 8, 10, 8, 12, 19);
+            stats.setAll(20, 25, 27, 8, 10, 8, 12, 21);
         }
         if (entity instanceof WitherBoss) {
-            stats.setAll(23, 21, 30, 7, 19, 4, 12, 18);
+            stats.setAll(23, 21, 30, 7, 19, 4, 12, 19);
         }
 
         //guardian/elder??

@@ -12,18 +12,20 @@ public class EntityStatsHolder {
     private int wisdom = 10;
     private int charisma = 10;
 
-    private int bonusStrength = 10;
-    private int bonusDexterity = 10;
-    private int bonusConstitution = 10;
-    private int bonusIntelligence = 10;
-    private int bonusWisdom = 10;
-    private int bonusCharisma = 10;
+    private int bonusStrength = 0;
+    private int bonusDexterity = 0;
+    private int bonusConstitution = 0;
+    private int bonusIntelligence = 0;
+    private int bonusWisdom = 0;
+    private int bonusCharisma = 0;
 
     private int level = 1;
     private int xp = 0;
     private int xpToLevel = 100 * level;
 
-    private int armorClass = 10;
+    private int naturalArmorClass = 10;
+    private int armorClass = 0;
+
 
     private boolean initialised = false;
 
@@ -87,53 +89,105 @@ public class EntityStatsHolder {
         this.armorClass = armorClass;
     }
 
-    public int getStrength() {
+    //Strength
+    public int getBaseStrength() {
         return strength;
     }
+    public int getBonusStrength() {return bonusStrength;}
+    public int getStrength() {
+        return Math.max(strength + bonusStrength, 0);
+    }
 
-    public void setStrength(int strength) {
+    public void setBaseStrength(int strength) {
         this.strength = strength;
     }
+    public void setBonusStrength(int bonusStrength) {this.bonusStrength = bonusStrength;}
 
-    public int getDexterity() {
+    //Dexterity
+    public int getBaseDexterity() {
         return dexterity;
     }
+    public int getBonusDexterity() {
+        return bonusDexterity;
+    }
+    public int getDexterity() {
+        return Math.max(dexterity + bonusDexterity, 0);
+    }
 
-    public void setDexterity(int dexterity) {
+    public void setBaseDexterity(int dexterity) {
         this.dexterity = dexterity;
     }
+    public void setBonusDexterity(int bonusDexterity) {
+        this.bonusDexterity = bonusDexterity;
+    }
 
-    public int getConstitution() {
+    //Constitution
+    public int getBaseConstitution() {
         return constitution;
     }
+    public int getBonusConstitution() {
+        return bonusConstitution;
+    }
+    public int getConstitution() {
+        return Math.max(constitution + bonusConstitution, 0);
+    }
 
-    public void setConstitution(int constitution) {
+    public void setBaseConstitution(int constitution) {
         this.constitution = constitution;
     }
+    public void setBonusConstitution(int bonusConstitution) {
+        this.bonusConstitution = bonusConstitution;
+    }
 
-    public int getIntelligence() {
+    //Intelligence
+    public int getBaseIntelligence() {
         return intelligence;
     }
+    public int getBonusIntelligence() {
+        return bonusIntelligence;
+    }
+    public int getIntelligence() {
+        return Math.max(intelligence + bonusIntelligence, 0);
+    }
 
-    public void setIntelligence(int intelligence) {
+    public void setBaseIntelligence(int intelligence) {
         this.intelligence = intelligence;
     }
+    public void setBonusIntelligence(int bonusIntelligence) {
+        this.bonusIntelligence = bonusIntelligence;
+    }
 
-    public int getWisdom() {
+    //Wisdom
+    public int getBaseWisdom() {
         return wisdom;
     }
-
-    public void setWisdom(int wisdom) {
-        this.wisdom = wisdom;
+    public int getBonusWisdom() {
+        return bonusWisdom;
     }
+    public int getWisdom() {return Math.max(wisdom + bonusWisdom, 0);}
 
-    public int getCharisma() {
-        return charisma;
-    }
+    public void setBaseWisdom(int wisdom) {this.wisdom = wisdom;}
+    public void setBonusWisdom(int bonusWisdom) {this.bonusWisdom = bonusWisdom;}
 
-    public void setCharisma(int charisma) {
-        this.charisma = charisma;
-    }
+    //Charisma
+    public int getBaseCharisma() {return charisma;}
+    public int getBonusCharisma() {return bonusCharisma;}
+    public int getCharisma() {return Math.max(charisma + bonusCharisma, 0);}
+
+    public void setBaseCharisma(int charisma) {this.charisma = charisma;}
+    public void setBonusCharisma(int bonusCharisma) {this.bonusCharisma = bonusCharisma;}
+
+    //Armor Class
+    public int getArmorClass() {return armorClass;}
+    public int getNaturalArmorClass() {return this.naturalArmorClass;}
+
+    public void setArmorClass(int armorClass) {this.armorClass = armorClass;}
+    public void setNaturalArmorClass(int naturalArmorClass) {this.naturalArmorClass = naturalArmorClass;}
+
+
+
+    //Levels
+
 
     public int getLevel() {
         return level;
@@ -159,13 +213,7 @@ public class EntityStatsHolder {
         this.xpToLevel = 100 * level;
     }
 
-    public int getArmorClass() {
-        return armorClass;
-    }
 
-    public void setArmorClass(int armorClass) {
-        this.armorClass = armorClass;
-    }
 
     public boolean isInitialised() {
         return initialised;

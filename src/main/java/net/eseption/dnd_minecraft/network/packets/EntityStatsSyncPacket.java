@@ -9,17 +9,25 @@ import net.minecraftforge.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
+//dictates what is sent between server to client (base and bonus stats, final stats to be added in client)
+//only issue is it's hard to define where the base and bonus stats come from (Baldur's Gate 3 style hover over text)
 
 public class EntityStatsSyncPacket {
 
     private int entityID;
 
-    private int strength;
-    private int dexterity;
-    private int constitution;
-    private int intelligence;
-    private int wisdom;
-    private int charisma;
+    private int baseStrength;
+    private int bonusStrength;
+    private int baseDexterity;
+    private int bonusDexterity;
+    private int baseConstitution;
+    private int bonusConstitution;
+    private int baseIntelligence;
+    private int bonusIntelligence;
+    private int baseWisdom;
+    private int bonusWisdom;
+    private int baseCharisma;
+    private int bonusCharisma;
 
     private int level;
 
@@ -30,12 +38,18 @@ public class EntityStatsSyncPacket {
 
         entity.getCapability(EntityStatsProvider.ENTITY_STATS)
                 .ifPresent(stats -> {
-                    this.strength = stats.getStrength();
-                    this.dexterity = stats.getDexterity();
-                    this.constitution = stats.getConstitution();
-                    this.intelligence = stats.getIntelligence();
-                    this.wisdom = stats.getWisdom();
-                    this.charisma = stats.getCharisma();
+                    this.baseStrength = stats.getBaseStrength();
+                    this.bonusStrength = stats.getBonusStrength();
+                    this.baseDexterity = stats.getBaseDexterity();
+                    this.bonusDexterity = stats.getBonusDexterity();
+                    this.baseConstitution = stats.getBaseConstitution();
+                    this.bonusConstitution = stats.getBonusConstitution();
+                    this.baseIntelligence = stats.getBaseIntelligence();
+                    this.bonusIntelligence = stats.getBonusIntelligence();
+                    this.baseWisdom = stats.getBaseWisdom();
+                    this.bonusWisdom = stats.getBonusWisdom();
+                    this.baseCharisma = stats.getBaseCharisma();
+                    this.bonusCharisma = stats.getBonusCharisma();
                     this.level = stats.getLevel();
                     this.armorClass = stats.getArmorClass();
                 });
@@ -47,12 +61,18 @@ public class EntityStatsSyncPacket {
     public EntityStatsSyncPacket(FriendlyByteBuf buf) {
         entityID = buf.readInt();
 
-        strength = buf.readInt();
-        dexterity = buf.readInt();
-        constitution = buf.readInt();
-        intelligence = buf.readInt();
-        wisdom = buf.readInt();
-        charisma = buf.readInt();
+        baseStrength = buf.readInt();
+        bonusStrength = buf.readInt();
+        baseDexterity = buf.readInt();
+        bonusDexterity = buf.readInt();
+        baseConstitution = buf.readInt();
+        bonusConstitution = buf.readInt();
+        baseIntelligence = buf.readInt();
+        bonusIntelligence = buf.readInt();
+        baseWisdom = buf.readInt();
+        bonusWisdom = buf.readInt();
+        baseCharisma = buf.readInt();
+        bonusCharisma = buf.readInt();
 
         level = buf.readInt();
 
@@ -63,12 +83,18 @@ public class EntityStatsSyncPacket {
 
         buf.writeInt(entityID);
 
-        buf.writeInt(strength);
-        buf.writeInt(dexterity);
-        buf.writeInt(constitution);
-        buf.writeInt(intelligence);
-        buf.writeInt(wisdom);
-        buf.writeInt(charisma);
+        buf.writeInt(baseStrength);
+        buf.writeInt(bonusStrength);
+        buf.writeInt(baseDexterity);
+        buf.writeInt(bonusDexterity);
+        buf.writeInt(baseConstitution);
+        buf.writeInt(bonusConstitution);
+        buf.writeInt(baseIntelligence);
+        buf.writeInt(bonusIntelligence);
+        buf.writeInt(baseWisdom);
+        buf.writeInt(bonusWisdom);
+        buf.writeInt(baseCharisma);
+        buf.writeInt(bonusCharisma);
 
         buf.writeInt(level);
 
@@ -96,21 +122,18 @@ public class EntityStatsSyncPacket {
 
             entity.getCapability(EntityStatsProvider.ENTITY_STATS)
                     .ifPresent(stats -> {
-                        stats.setStrength(strength);
-                        stats.setDexterity(dexterity);
-                        stats.setConstitution(constitution);
-                        stats.setIntelligence(intelligence);
-                        stats.setWisdom(wisdom);
-                        stats.setCharisma(charisma);
+                        stats.setBaseStrength(baseStrength);
+                        stats.setBaseDexterity(baseDexterity);
+                        stats.setBaseConstitution(baseConstitution);
+                        stats.setBaseIntelligence(baseIntelligence);
+                        stats.setBaseWisdom(baseWisdom);
+                        stats.setBaseCharisma(baseCharisma);
                         stats.setArmorClass(armorClass);
                         stats.setLevel(level);
                     });
-
         });
 
         return true;
-
     }
-
 
 }

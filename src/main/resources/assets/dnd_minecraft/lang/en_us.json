@@ -17,5 +17,18 @@
   "gui.dnd_minecraft.stats_screen": "Stats",
   "gui.dnd_minecraft.skills_screen": "Skills",
   "gui.dnd_minecraft.spells_screen": "Spellbook",
-  "gui.dnd_minecraft.level_screen": "Levels"
+  "gui.dnd_minecraft.level_screen": "Levels",
+
+  "gui.dnd_minecraft.character_screen.next_page_button": "Next Page",
+
+  "gui.dnd_minecraft.character_screen.listing.strength": "STR: %s",
+  "gui.dnd_minecraft.character_screen.listing.dexterity": "DEX: %s",
+  "gui.dnd_minecraft.character_screen.listing.constitution": "CON: %s",
+  "gui.dnd_minecraft.character_screen.listing.intelligence": "INT: %s",
+  "gui.dnd_minecraft.character_screen.listing.wisdom": "WIS: %s",
+  "gui.dnd_minecraft.character_screen.listing.charisma": "CHA: %s",
+  "gui.dnd_minecraft.character_screen.listing.armor_class": "AC : %s",
+  "gui.dnd_minecraft.character_screen.listing.level": "LVL : %s",
+  "gui.dnd_minecraft.character_screen.listing.level_xp": "%s",
+  "gui.dnd_minecraft.character_screen.listing.xp": "XP : %s"
 }

@@ -26,6 +26,8 @@ public class StatsCommand {
 
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
 
+        //check current stats (rename, add <base/current>)
+        //stats
         dispatcher.register(
                 Commands.literal("stats")
                         .executes(context -> {
@@ -39,7 +41,8 @@ public class StatsCommand {
                                                                 "CON = " + stats.getConstitution() + "\n" +
                                                                 "INT = " + stats.getIntelligence() + "\n" +
                                                                 "WIS = " + stats.getWisdom() + "\n" +
-                                                                "CHA = " + stats.getCharisma()),
+                                                                "CHA = " + stats.getCharisma() + "\n" +
+                                                                "AC = " + stats.getArmorClass()),
                                                 false
 
                                         );
@@ -47,6 +50,9 @@ public class StatsCommand {
                             return 1;
                         })
         );
+
+        //setbasestats (rename)
+        //setstats <stat> <value>
         dispatcher.register(
                 Commands.literal("setstats")
                         .then(
@@ -70,12 +76,12 @@ public class StatsCommand {
                                                             .ifPresent(stats -> {
 
                                                                 switch (stat) {
-                                                                    case "strength" -> stats.setStrength(value);
-                                                                    case "dexterity" -> stats.setDexterity(value);
-                                                                    case "constitution" -> stats.setConstitution(value);
-                                                                    case "intelligence" -> stats.setIntelligence(value);
-                                                                    case "wisdom" -> stats.setWisdom(value);
-                                                                    case "charisma" -> stats.setCharisma(value);
+                                                                    case "strength" -> stats.setBaseStrength(value);
+                                                                    case "dexterity" -> stats.setBaseDexterity(value);
+                                                                    case "constitution" -> stats.setBaseConstitution(value);
+                                                                    case "intelligence" -> stats.setBaseIntelligence(value);
+                                                                    case "wisdom" -> stats.setBaseWisdom(value);
+                                                                    case "charisma" -> stats.setBaseCharisma(value);
                                                                 }
 
                                                                 ModMessages.sendToPlayer(new EntityStatsSyncPacket(player), player);

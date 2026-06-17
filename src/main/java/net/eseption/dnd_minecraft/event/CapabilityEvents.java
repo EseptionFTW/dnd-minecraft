@@ -2,7 +2,6 @@ package net.eseption.dnd_minecraft.event;
 
 import net.eseption.dnd_minecraft.Dnd_minecraft;
 import net.eseption.dnd_minecraft.capability.EntityStatsProvider;
-import net.eseption.dnd_minecraft.util.StatSetter;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
