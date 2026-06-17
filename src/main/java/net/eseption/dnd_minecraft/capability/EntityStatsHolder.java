@@ -12,11 +12,21 @@ public class EntityStatsHolder {
     private int wisdom = 10;
     private int charisma = 10;
 
+    private int bonusStrength = 10;
+    private int bonusDexterity = 10;
+    private int bonusConstitution = 10;
+    private int bonusIntelligence = 10;
+    private int bonusWisdom = 10;
+    private int bonusCharisma = 10;
+
     private int level = 1;
     private int xp = 0;
     private int xpToLevel = 100 * level;
 
     private int armorClass = 10;
+
+    private boolean initialised = false;
+
 
     public void copyData(EntityStatsHolder curStats) {
         this.strength = curStats.strength;
@@ -64,6 +74,17 @@ public class EntityStatsHolder {
         xpToLevel = tag.getInt("LevelXP");
 
         armorClass = tag.getInt("AC");
+    }
+
+    public void setAll(int strength, int dexterity, int constitution, int intelligence, int wisdom, int charisma, int level, int armorClass) {
+        this.strength = strength;
+        this.dexterity = dexterity;
+        this.constitution = constitution;
+        this.intelligence = intelligence;
+        this.wisdom = wisdom;
+        this.charisma = charisma;
+        this.level = level;
+        this.armorClass = armorClass;
     }
 
     public int getStrength() {
@@ -144,5 +165,13 @@ public class EntityStatsHolder {
 
     public void setArmorClass(int armorClass) {
         this.armorClass = armorClass;
+    }
+
+    public boolean isInitialised() {
+        return initialised;
+    }
+
+    public void setInitialised(boolean initialised) {
+        this.initialised = initialised;
     }
 }
