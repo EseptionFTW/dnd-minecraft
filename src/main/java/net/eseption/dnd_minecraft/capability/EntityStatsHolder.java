@@ -23,6 +23,8 @@ public class EntityStatsHolder {
     private int xp = 0;
     private int xpToLevel = 100 * level;
 
+    private int proficiency = 2; //might need to save this data into nbt below and server
+
     private int naturalArmorClass = 10;
     private int armorClass = 0;
 
@@ -221,5 +223,13 @@ public class EntityStatsHolder {
 
     public void setInitialised(boolean initialised) {
         this.initialised = initialised;
+    }
+
+    public int getProficiency() {
+        return proficiency;
+    }
+
+    public void setProficiency(int proficiency) {
+        this.proficiency = proficiency;
     }
 }

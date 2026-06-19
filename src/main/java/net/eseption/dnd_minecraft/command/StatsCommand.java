@@ -91,6 +91,7 @@ public class StatsCommand {
 
                                                     return 1;
                                                 })))
+                        .requires(source -> source.hasPermission(2))
         );
     }
 }

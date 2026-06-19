@@ -19,7 +19,7 @@ import net.minecraft.world.entity.player.Player;
 
 //separate stats into functions
 
-public class StatBaseSetter {
+public class StatBaseSetterUtil {
 
     public static void generateStats(LivingEntity entity, EntityStatsHolder stats) {
 

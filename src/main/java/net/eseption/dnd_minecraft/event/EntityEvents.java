@@ -4,8 +4,8 @@ import net.eseption.dnd_minecraft.Dnd_minecraft;
 import net.eseption.dnd_minecraft.capability.EntityStatsProvider;
 import net.eseption.dnd_minecraft.network.ModMessages;
 import net.eseption.dnd_minecraft.network.packets.EntityStatsSyncPacket;
-import net.eseption.dnd_minecraft.util.StatBaseSetter;
-import net.eseption.dnd_minecraft.util.StatUpdater;
+import net.eseption.dnd_minecraft.util.StatBaseSetterUtil;
+import net.eseption.dnd_minecraft.util.StatUpdaterUtil;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
@@ -32,9 +32,9 @@ public class EntityEvents {
 
         livingEntity.getCapability(EntityStatsProvider.ENTITY_STATS).ifPresent(stats -> {
             if (!stats.isInitialised()) {
-                StatBaseSetter.generateStats(livingEntity, stats);
+                StatBaseSetterUtil.generateStats(livingEntity, stats);
                 //depending on implementation this might not be needed imminently
-                StatUpdater.updateStats(livingEntity, stats);
+                StatUpdaterUtil.updateStats(livingEntity, stats);
             }
         });
     }
@@ -45,7 +45,6 @@ public class EntityEvents {
     //LivingEquipmentChange
     //LivingHurtEvent
     //LivingHealEvent
-
 
     @SubscribeEvent
     public static void onEntityUpdate(LivingEvent.LivingTickEvent event) {
@@ -60,7 +59,7 @@ public class EntityEvents {
 
         livingEntity.getCapability(EntityStatsProvider.ENTITY_STATS).ifPresent(stats -> {
             //if(stats.isInitialised()) {
-                StatUpdater.updateStats(livingEntity, stats);
+                StatUpdaterUtil.updateStats(livingEntity, stats);
                 ModMessages.sentToTrackingEntity(new EntityStatsSyncPacket(livingEntity), livingEntity);
             //}
         });

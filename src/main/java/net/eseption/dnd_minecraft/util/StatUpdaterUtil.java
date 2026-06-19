@@ -3,11 +3,21 @@ package net.eseption.dnd_minecraft.util;
 import net.eseption.dnd_minecraft.capability.EntityStatsHolder;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.item.ItemStack;
 
-public class StatUpdater {
+import java.util.Collection;
+import java.util.Set;
+import java.util.UUID;
+
+import static net.eseption.dnd_minecraft.util.BaseItemCollectionUtil.EQUIPABLE_MODIFIER_UUID_PER_SLOT;
+import static net.eseption.dnd_minecraft.util.BaseItemCollectionUtil.Equipables;
+
+public class StatUpdaterUtil {
 
     public static void updateStats(LivingEntity entity, EntityStatsHolder stats) {
 
@@ -127,6 +137,7 @@ public class StatUpdater {
 
     public static int getArmorClass(LivingEntity entity, EntityStatsHolder stats) {
         int base_ac = stats.getNaturalArmorClass();
+        int equip_ac = 0;
         int final_ac = 0;
         int nat_acBonus = entity.getArmorValue() / 2;
         int dex_modifier;
@@ -157,13 +168,50 @@ public class StatUpdater {
             dex_modifier = Math.floorDiv((stats.getBaseDexterity() + getDexterityBonus(entity, stats) - 10),2);
         }
 
+        equip_ac = getEquipArmor(entity);
+
         //if armor > 8 (dex = 0)
         //??? = 10 + 2 + (0-10) + (0-5+)
-        final_ac = base_ac + nat_acBonus + armor_ac + dex_modifier;
+        final_ac = base_ac + nat_acBonus + armor_ac + dex_modifier + equip_ac;
 
 
         return final_ac;
     }
+
+
+    //temporarily depreciated function and set to get final armor values, will be reintroduced when extra slots are implemented
+    private static final Set<UUID> VALID_EQUIP_UUIDS =
+            Set.of(EQUIPABLE_MODIFIER_UUID_PER_SLOT);
+
+    private static int getEquipArmor(LivingEntity entity) {
+        int equipAc = 0;
+
+        for (EquipmentSlot slot : Equipables) {
+            ItemStack stack = entity.getItemBySlot(slot);
+
+            if (stack.isEmpty()) {
+                continue;
+            }
+
+            Collection<AttributeModifier> modifiers =
+                    stack.getItem()
+                            .getAttributeModifiers(slot, stack)
+                            .get(Attributes.ARMOR);
+
+            for (AttributeModifier modifier : modifiers) {
+                if (VALID_EQUIP_UUIDS.contains(modifier.getId())) {
+                    equipAc += (int) modifier.getAmount();
+                }
+            }
+        }
+
+
+
+        return equipAc;
+    }
+
+
+
 
     public static int getLevelXP(LivingEntity entity) {
         int bonus = 0;

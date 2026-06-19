@@ -2,12 +2,11 @@ package net.eseption.dnd_minecraft.client.screen;
 
 import net.eseption.dnd_minecraft.Dnd_minecraft;
 import net.eseption.dnd_minecraft.capability.EntityStatsProvider;
-import net.eseption.dnd_minecraft.util.StatUpdater;
+import net.eseption.dnd_minecraft.util.StatUpdaterUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Renderable;
-import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.player.LocalPlayer;
@@ -15,8 +14,6 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.level.Level;
 import org.joml.Quaternionf;
@@ -99,7 +96,7 @@ public class CharacterScreen extends Screen {
         InventoryScreen.renderEntityInInventory(graphic, this.leftPos, this.topPos, 30, new Quaternionf(0,0,0,1), new Quaternionf(0,0,0,1), player);
 
         player.getCapability(EntityStatsProvider.ENTITY_STATS).ifPresent(stats -> {
-            StatUpdater.updateStats(player, stats);
+            StatUpdaterUtil.updateStats(player, stats);
             str = stats.getStrength();
             dex = stats.getDexterity();
             con = stats.getConstitution();
@@ -112,7 +109,6 @@ public class CharacterScreen extends Screen {
             xp = stats.getXp();
         });
 
-
         Component STR_TEXT = Component.translatable("gui." + Dnd_minecraft.MODID + ".character_screen.listing.strength", str);
         Component DEX_TEXT = Component.translatable("gui." + Dnd_minecraft.MODID + ".character_screen.listing.dexterity", dex);
         Component CON_TEXT = Component.translatable("gui." + Dnd_minecraft.MODID + ".character_screen.listing.constitution", con);
@@ -124,8 +120,6 @@ public class CharacterScreen extends Screen {
         Component LVL_TEXT = Component.translatable("gui." + Dnd_minecraft.MODID + ".character_screen.listing.level", lvl);
         Component LXP_TEXT = Component.translatable("gui." + Dnd_minecraft.MODID + ".character_screen.listing.level_xp", lxp);
         Component XP_TEXT = Component.translatable("gui." + Dnd_minecraft.MODID + ".character_screen.listing.xp", xp);
-
-        //graphic.drawCenteredString(this.font, TITLE, );
 
         //Ability Scores
         graphic.drawString(this.font, STR_TEXT, this.leftPos + 101, this.topPos + 25, 0x404040, false);
