@@ -2,6 +2,7 @@ package net.eseption.dnd_minecraft.network;
 
 import net.eseption.dnd_minecraft.Dnd_minecraft;
 import net.eseption.dnd_minecraft.network.packets.EntityStatsSyncPacket;
+import net.eseption.dnd_minecraft.network.packets.OpenMenusSyncPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerEntity;
 import net.minecraft.server.level.ServerPlayer;
@@ -32,6 +33,14 @@ public class ModMessages {
                 .encoder(EntityStatsSyncPacket::toBytes)
                 .consumerMainThread(EntityStatsSyncPacket::handle)
                 .add();
+
+        net.registerMessage(
+                id(),
+                OpenMenusSyncPacket.class,
+                OpenMenusSyncPacket::encode,
+                OpenMenusSyncPacket::decode,
+                OpenMenusSyncPacket::handle
+        );
     }
 
     public static <MSG> void sendToServer(MSG message) {INSTANCE.sendToServer(message);}

@@ -133,6 +133,10 @@ sourceSets.main.resources { srcDir 'src/generated/resources' }
 repositories {
     // Put repositories for dependencies here
     // ForgeGradle automatically adds the Forge maven and Maven Central for you
+    maven {
+        url = "https://maven.theillusivec4.top/" //curios
+
+    }
 
     // If you have mod jar dependencies in ./libs, you can declare them as a repository like so.
     // See https://docs.gradle.org/current/userguide/declaring_repositories.html#sub:flat_dir_resolver
@@ -154,6 +158,7 @@ dependencies {
     // compileOnly fg.deobf("mezz.jei:jei-${mc_version}-common-api:${jei_version}")
     // compileOnly fg.deobf("mezz.jei:jei-${mc_version}-forge-api:${jei_version}")
     // runtimeOnly fg.deobf("mezz.jei:jei-${mc_version}-forge:${jei_version}")
+    implementation fg.deobf("top.theillusivec4.curios:curios-forge:5.14.1+1.20.1") //curios
 
     // Example mod dependency using a mod jar from ./libs with a flat dir repository
     // This maps to ./libs/coolmod-${mc_version}-${coolmod_version}.jar

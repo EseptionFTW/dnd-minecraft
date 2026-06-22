@@ -19,7 +19,7 @@ public class ModCreativeModeTabs {
                     .title(Component.translatable("creativetab.dnd_minecraft_tab"))
                     .displayItems((pParameters, pOutput) -> {
                         pOutput.accept(Items.STICK.asItem());
-
+                        pOutput.accept(ModItems.PROTECTION_RING.get());
                     })
                     .build());
 

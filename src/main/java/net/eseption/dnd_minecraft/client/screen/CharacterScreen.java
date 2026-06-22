@@ -2,12 +2,14 @@ package net.eseption.dnd_minecraft.client.screen;
 
 import net.eseption.dnd_minecraft.Dnd_minecraft;
 import net.eseption.dnd_minecraft.capability.EntityStatsProvider;
+import net.eseption.dnd_minecraft.client.inventory.CharacterScreenMenu;
 import net.eseption.dnd_minecraft.util.StatUpdaterUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Renderable;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
@@ -15,11 +17,14 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import org.joml.Quaternionf;
 
-public class CharacterScreen extends Screen {
+public class CharacterScreen extends AbstractContainerScreen<CharacterScreenMenu> {
     private static final Component TITLE = Component.translatable("gui." + Dnd_minecraft.MODID + ".character_screen");
+    private static final Component NULL = Component.literal("");
     private static final ResourceLocation BACKGROUND = new ResourceLocation(Dnd_minecraft.MODID, "textures/gui/character_screen1.png");
 
     private static final Component NEXT_PAGE_BUTTON = Component.translatable("gui." + Dnd_minecraft.MODID + ".character_screen.next_page_button");
@@ -39,8 +44,8 @@ public class CharacterScreen extends Screen {
     private int leftPos, topPos;
 
     //AbstractContainerMenu menu, Inventory playerInventory, Component TITLE
-    public CharacterScreen() {
-        super(TITLE);
+    public CharacterScreen(CharacterScreenMenu playerMenu, Inventory playerInventory, Component component) {
+        super(playerMenu, playerInventory, NULL);
         this.imageWidth = 220;
         this.imageHeight = 222;
     }
@@ -61,6 +66,7 @@ public class CharacterScreen extends Screen {
         LocalPlayer player = this.minecraft.player;
         if (player == null) {return;}
 
+        //change location in code to render method()?
         this.button = addRenderableWidget(
                 Button.builder(
                         NEXT_PAGE_BUTTON,
@@ -76,13 +82,11 @@ public class CharacterScreen extends Screen {
 
     @Override
     public void render(GuiGraphics graphic, int mouseX, int mouseY, float partialTicks) {
-        renderBackground(graphic);
-        graphic.blit(BACKGROUND, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);
+        //renderBackground(graphic);
+        //graphic.blit(BACKGROUND, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);
 
-        //super.render()
-        for(Renderable renderable : this.renderables) {
-            renderable.render(graphic, mouseX, mouseY, partialTicks);
-        }
+        super.render(graphic, mouseX, mouseY, partialTicks);
+        //for(Renderable renderable : this.renderables) {renderable.render(graphic, mouseX, mouseY, partialTicks);}
 
         //false for shadow
         //title (font, component, left->right (Xpos), top->bottom (Ypos), color, shadow)
@@ -138,6 +142,7 @@ public class CharacterScreen extends Screen {
         graphic.drawString(this.font, XP_TEXT, this.leftPos + 12, this.topPos + 127, 0x404040, false);
 
         //Statuses
+        //can be more efficient by getting player.getActiveEffects faster / not every frame
         int yOffset = 0;
         String timeString = "--:--";
         for (MobEffectInstance effect : player.getActiveEffects()) {
@@ -171,7 +176,24 @@ public class CharacterScreen extends Screen {
             }
         }
 
+        //tooltip renderer
+        if (this.menu.getCarried().isEmpty() && this.hoveredSlot != null && this.hoveredSlot.hasItem()) {
+            ItemStack stack = this.hoveredSlot.getItem();
+            graphic.renderTooltip(this.font,this.getTooltipFromContainerItem(stack), stack.getTooltipImage(), stack, mouseX, mouseY);
+        }
 
+    }
+
+    //derenders extra inventory translatable labels
+    @Override
+    protected void renderLabels(GuiGraphics graphic, int labelX, int labelY) {
+        //super.renderLabels(graphic, 0, 0);
+    }
+    
+    @Override
+    protected void renderBg(GuiGraphics graphic, float partialTicks, int mouseX, int mouseY) {
+        renderBackground(graphic);
+        graphic.blit(BACKGROUND, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);
     }
 
     private void nextPageButtonHandler(Button button) {

@@ -19,15 +19,15 @@ public class BaseItemCollectionUtil {
             java.util.UUID.fromString("2AD3E313-BE5A-400A-8A29-644E65034B0B")
     };
 
-    //Main=0, Off=1, Neck=2, Cape=3, Ring1=4, Ring2=5
+    //head, neck, cape, ring
     //capitalise later
     public static final java.util.UUID[] EQUIPABLE_MODIFIER_UUID_PER_SLOT = new java.util.UUID[] {
             java.util.UUID.fromString("94CBCB82-033A-4FCF-B9BE-4452B67E211E"),
             java.util.UUID.fromString("77F9E86B-BB18-4A6D-ADED-647AD9F85239"),
             java.util.UUID.fromString("d68ea139-8a59-4e6a-8d76-87f98c1ce357"),
             java.util.UUID.fromString("3db57d92-0e7b-49b1-8471-1669e17624ea"),
-            java.util.UUID.fromString("adbd63c5-3411-4cf7-91fa-e90dc0a3613c"),
-            java.util.UUID.fromString("5bb7f693-fc78-4999-bf33-9c8263f38c0c")
+          //  java.util.UUID.fromString("adbd63c5-3411-4cf7-91fa-e90dc0a3613c"),
+          //  java.util.UUID.fromString("5bb7f693-fc78-4999-bf33-9c8263f38c0c")
     };
 
 

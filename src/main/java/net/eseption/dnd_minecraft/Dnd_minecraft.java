@@ -1,9 +1,12 @@
 package net.eseption.dnd_minecraft;
 
 import com.mojang.logging.LogUtils;
+import net.eseption.dnd_minecraft.client.inventory.ModMenus;
 import net.eseption.dnd_minecraft.item.ModCreativeModeTabs;
+import net.eseption.dnd_minecraft.item.ModItems;
 import net.eseption.dnd_minecraft.network.ModMessages;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.*;
@@ -17,21 +20,28 @@ import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.InterModComms;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
+import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import org.slf4j.Logger;
+import top.theillusivec4.curios.api.SlotTypeMessage;
+import top.theillusivec4.curios.api.SlotTypePreset;
+import top.theillusivec4.curios.common.slottype.SlotType;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(Dnd_minecraft.MODID)
 public class Dnd_minecraft {
 
+    @SuppressWarnings(value = "deprecation ")
     // Define mod id in a common place for everything to reference
     public static final String MODID = "dnd_minecraft";
     // Directly reference a slf4j logger
@@ -59,15 +69,21 @@ public class Dnd_minecraft {
     public Dnd_minecraft() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
+        //Adding creative tab
         ModCreativeModeTabs.register(modEventBus);
+
+        // Custom inventory menu screen loading
+        ModMenus.MENUS.register(modEventBus);
 
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);
 
         // Register the Deferred Register to the mod event bus so blocks get registered
-        BLOCKS.register(modEventBus);
+        //BLOCKS.register(modEventBus);
+        //ModBlocks.register(modEventBus);
         // Register the Deferred Register to the mod event bus so items get registered
-        ITEMS.register(modEventBus);
+        ModItems.register(modEventBus);
+        //ITEMS.register(modEventBus);
         // Register the Deferred Register to the mod event bus so tabs get registered
         CREATIVE_MODE_TABS.register(modEventBus);
 
@@ -76,6 +92,11 @@ public class Dnd_minecraft {
 
         // Register the item to a creative tab
         modEventBus.addListener(this::addCreative);
+
+        // Register enqueue for dependency loading
+        modEventBus.addListener(this::enqueueIMC);
+
+        modEventBus.addListener(this::processIMC);
 
         // Register our mod's ForgeConfigSpec so that Forge can create and load the config file for us
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.SPEC);
@@ -95,10 +116,31 @@ public class Dnd_minecraft {
         ModMessages.register();
     }
 
+    //ignore warnings version 1.20.1
+    private void enqueueIMC(final InterModEnqueueEvent event) {
+        InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE, () ->
+                SlotTypePreset.HEAD.getMessageBuilder().build());
+        InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE, () ->
+                SlotTypePreset.NECKLACE.getMessageBuilder().build());
+        InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE, () ->
+                SlotTypePreset.BODY.getMessageBuilder().build());
+        InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE, () ->
+                SlotTypePreset.RING.getMessageBuilder().size(2).build());
+        InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE, () ->
+                SlotTypePreset.BACK.getMessageBuilder().build());
+    }
+
+    private void processIMC(final InterModProcessEvent event) {
+
+    }
+
     // Add the example block item to the building blocks tab
     private void addCreative(BuildCreativeModeTabContentsEvent event) {
         if(event.getTabKey() == CreativeModeTabs.INGREDIENTS) {
             event.accept(Items.STICK);
+        }
+        if (event.getTabKey() == CreativeModeTabs.COMBAT) {
+            event.accept(ModItems.PROTECTION_RING);
         }
     }
 

@@ -28,7 +28,6 @@ public class EntityStatsHolder {
     private int naturalArmorClass = 10;
     private int armorClass = 0;
 
-
     private boolean initialised = false;
 
 

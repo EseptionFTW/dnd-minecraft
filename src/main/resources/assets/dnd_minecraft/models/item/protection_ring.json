@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "dnd_minecraft:item/reset_scroll"
+    "layer0": "dnd_minecraft:item/protection_ring"
   }
 }

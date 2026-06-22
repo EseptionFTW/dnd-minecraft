@@ -29,5 +29,11 @@
   "gui.dnd_minecraft.character_screen.listing.armor_class": "AC : %s",
   "gui.dnd_minecraft.character_screen.listing.level": "LVL : %s",
   "gui.dnd_minecraft.character_screen.listing.level_xp": "%s",
-  "gui.dnd_minecraft.character_screen.listing.xp": "XP : %s"
+  "gui.dnd_minecraft.character_screen.listing.xp": "XP : %s",
+
+  "item.dnd_minecraft.curio.ring.protection_ring": "Ring Of 2 Protection",
+  "item.dnd_minecraft.protection_ring": "Ring Of Protection",
+  "tooltip.dnd_minecraft.item.curio.protection_ring": "Unique: +1 Armor Class"
+
+
 }
